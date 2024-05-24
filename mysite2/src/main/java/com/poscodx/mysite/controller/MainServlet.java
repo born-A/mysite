@@ -1,4 +1,4 @@
-package mysite.controller;
+package com.poscodx.mysite.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
