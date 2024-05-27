@@ -15,7 +15,7 @@
 		<div id="content">
 			<div id="guestbook">
 				<form action="<%=request.getContextPath() %>/guestbook" method="post">
-					<input type="hidden" name="a" value="insert">
+					<input type="hidden" name="a" value="add">
 					<table>
 						<tr>
 							<td>이름</td><td><input type="text" name="name"></td>
