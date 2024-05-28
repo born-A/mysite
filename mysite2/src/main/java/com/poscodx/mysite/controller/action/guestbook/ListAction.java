@@ -16,6 +16,11 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<GuestbookVo> list = new GuestbookDao().findAll();
+		for (GuestbookVo vo : list) {
+		    vo.setContents(vo.getContents().replaceAll(">", "&gt;")
+		                                  .replaceAll("<", "&lt;")
+		                                  .replaceAll("\n", "<br/>"));
+		}
 		request.setAttribute("list", list);
 		request
 			.getRequestDispatcher("/WEB-INF/views/guestbook/list.jsp")
