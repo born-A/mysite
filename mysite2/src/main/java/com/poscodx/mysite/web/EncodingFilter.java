@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -22,6 +23,14 @@ public class EncodingFilter extends HttpFilter implements Filter {
 		
 		/* response 처리 */
 		
+	}
+
+	@Override
+	public void init(FilterConfig config) throws ServletException {
+		String encoding = config.getInitParameter("encoding");
+		if(encoding == null) {
+			encoding = "utf-8";
+		}
 	}
 
 }
