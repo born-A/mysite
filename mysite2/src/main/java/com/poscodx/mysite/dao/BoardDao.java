@@ -301,9 +301,7 @@ public class BoardDao {
 		
 		try (
 			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select title, contents, g_no, o_no, depth from board where no = ?");
-			PreparedStatement pstmt2 = conn.prepareStatement("update board set hit = hit + 1 where no = ?");
-			
+			PreparedStatement pstmt = conn.prepareStatement("select title, contents, g_no, o_no, depth, user_no from board where no = ?");
 		) {	
 			pstmt.setLong(1, no);
 			ResultSet rs = pstmt.executeQuery();
@@ -314,6 +312,7 @@ public class BoardDao {
 				int groupNo = rs.getInt(3); 
 				int orderNo = rs.getInt(4); 
 				int depth = rs.getInt(5); 
+				Long userNo = rs.getLong(6);
 
 				vo.setNo(no);
 				vo.setTitle(title);
@@ -321,10 +320,8 @@ public class BoardDao {
 				vo.setGroupNo(groupNo);
 				vo.setOrderNo(orderNo);
 				vo.setDepth(depth);
+				vo.setUserNo(userNo);
 			}
-			
-			pstmt2.setLong(1, no);
-			pstmt2.executeQuery();
 			
 		} catch (SQLException e) {
 			System.out.println("Error:" + e);
@@ -437,6 +434,22 @@ public class BoardDao {
 			e.printStackTrace();
 		} 
 	
+		return result;
+	}
+	
+	public int increaseHit(Long no) {
+		int result = 0;
+
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement("update board set hit = hit + 1 where no = ?");
+		) {
+			pstmt.setLong(1, no);
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		}
+
 		return result;
 	}
 

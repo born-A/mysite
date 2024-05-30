@@ -29,10 +29,6 @@ public class PageVo {
 		this.prev = this.startPage > 1;
 		
 		this.next = this.endPage < realEnd;
-		
-		// 확인
-		System.out.println("시작페이지:" + this.startPage + ", 끝페이지:" + this.endPage);
-
 	}
 
 
