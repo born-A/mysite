@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>mysite2</display-name>
-  
-  <!-- Context Parameter -->
   <context-param>
-  	<param-name>contextConfigLocation</param-name>
-  	<param-value>/WEB-INF/applicationContext.xml</param-value>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/applicationContext.xml</param-value>
   </context-param>
-  
-  <!--Context Load Listener -->
-   <listener>
+  <listener>
     <listener-class>com.poscodx.mysite.web.ContextLoadListener</listener-class>
   </listener>
-  
-  <!-- Encoding Filter -->
   <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>com.poscodx.mysite.web.EncodingFilter</filter-class>
     <init-param>
-    	<param-name>encoding</param-name>
-    	<param-value>utf-8</param-value>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
     </init-param>
   </filter>
   <filter-mapping>
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  <!-- Servlets -->
   <servlet>
     <servlet-name>MainServlet</servlet-name>
     <servlet-class>com.poscodx.mysite.controller.MainServlet</servlet-class>
     <init-param>
-    	<param-name>config</param-name>
-    	<param-value>/WEB-INF/servlet-context.xml</param-value>
+      <param-name>config</param-name>
+      <param-value>/WEB-INF/servlet-context.xml</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
@@ -64,8 +56,6 @@
     <servlet-name>GuestbookServlet</servlet-name>
     <url-pattern>/guestbook</url-pattern>
   </servlet-mapping>
-  
-  <!--  Common Error Pages -->
   <error-page>
     <error-code>400</error-code>
     <location>/WEB-INF/views/errors/400.jsp</location>
@@ -78,8 +68,6 @@
     <error-code>500</error-code>
     <location>/WEB-INF/views/errors/500.jsp</location>
   </error-page>
-  
-  <!--  Default Pages -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -88,5 +76,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-
+  <servlet>
+    <description></description>
+    <display-name>BoardServlet</display-name>
+    <servlet-name>BoardServlet</servlet-name>
+    <servlet-class>com.poscodx.mysite.controller.BoardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardServlet</servlet-name>
+    <url-pattern>/board</url-pattern>
+  </servlet-mapping>
 </web-app>

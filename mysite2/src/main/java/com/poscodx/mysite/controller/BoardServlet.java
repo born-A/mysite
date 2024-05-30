@@ -1,23 +1,36 @@
 package com.poscodx.mysite.controller;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
-/**
- * Servlet implementation class BoardServlet
- */
-public class BoardServlet extends HttpServlet {
+import com.poscodx.mysite.controller.action.board.DeleteAction;
+import com.poscodx.mysite.controller.action.board.ListAction;
+import com.poscodx.mysite.controller.action.board.ModifyAction;
+import com.poscodx.mysite.controller.action.board.ModifyFormAction;
+import com.poscodx.mysite.controller.action.board.ReplyAction;
+import com.poscodx.mysite.controller.action.board.ReplyFormAction;
+import com.poscodx.mysite.controller.action.board.SearchAction;
+import com.poscodx.mysite.controller.action.board.ViewAction;
+import com.poscodx.mysite.controller.action.board.WriteAction;
+import com.poscodx.mysite.controller.action.board.WriteFormAction;
+
+public class BoardServlet extends ActionServlet {
 	private static final long serialVersionUID = 1L;
-   
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	   
+	private Map<String, Action> mapAction = Map.of(
+		"modifyform", new ModifyFormAction(),
+		"modify", new ModifyAction(),
+		"view", new ViewAction(),
+		"write", new WriteAction(),
+		"writeform", new WriteFormAction(),
+		"delete", new DeleteAction(),
+		"reply", new ReplyAction(),
+		"replyform", new ReplyFormAction(),
+		"search", new SearchAction()
+	);
+	
+	@Override
+	protected Action getAction(String actionName) {
+		return mapAction.getOrDefault(actionName, new ListAction());
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
 }
+
