@@ -38,7 +38,7 @@
 					<c:forEach var="vo" items="${list}">
     					<table>
     						<tr>
-								<td>[${vo.getNo() }]</td>
+								<td>[${vo.getNumbering() }]</td>
 								<td>${vo.getName() }</td>
 								<td>${vo.getRegDate() }</td>
 								<td><a href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.getNo() }">삭제</a></td>

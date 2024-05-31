@@ -19,13 +19,13 @@ public class ReplyFormAction implements Action {
 		
 		// Access Control
 		if(session == null) {
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath()+"/board?writeSuccess=failed");
 			return;
 		}
 		
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		if(authUser == null) {
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath()+"/board?writeSuccess=failed");
 			return;
 		}
 		

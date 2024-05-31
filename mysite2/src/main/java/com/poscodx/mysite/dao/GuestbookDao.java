@@ -56,7 +56,7 @@ public class GuestbookDao {
 	
 	public List<GuestbookVo> findAll() {
 		List<GuestbookVo> result = new ArrayList<>();
-		
+		int totalPosts = getTotal();
 		try (
 			Connection conn = getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
@@ -65,7 +65,7 @@ public class GuestbookDao {
 				"  order by reg_date desc");
 			ResultSet rs = pstmt.executeQuery();
 		) {
-			
+			int index = totalPosts;
 			while(rs.next()) {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
@@ -78,6 +78,8 @@ public class GuestbookDao {
 				vo.setContents(contents);
 				vo.setRegDate(regDate);
 				
+				// 넘버링을 추가
+                vo.setNumbering(index--);
 				result.add(vo);
 			}
 			
@@ -101,5 +103,23 @@ public class GuestbookDao {
 		} 
 		
 		return conn;
+	}
+	
+	public int getTotal() {
+		int result = 0;
+		
+		try (
+				Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement("select count(*) as total from guestbook");
+				ResultSet rs = pstmt.executeQuery();
+		){
+			if(rs.next()) {
+				result = rs.getInt("total");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+	
+		return result;
 	}
 }

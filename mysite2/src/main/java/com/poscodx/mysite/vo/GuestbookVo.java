@@ -6,7 +6,14 @@ public class GuestbookVo {
 	private String password;
 	private String contents;
 	private String regDate;
+	private int numbering;
 	
+	public int getNumbering() {
+		return numbering;
+	}
+	public void setNumbering(int numbering) {
+		this.numbering = numbering;
+	}
 	public Long getNo() {
 		return no;
 	}

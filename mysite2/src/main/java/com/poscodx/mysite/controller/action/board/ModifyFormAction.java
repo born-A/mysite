@@ -25,14 +25,16 @@ public class ModifyFormAction implements Action {
 		}
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			response.sendRedirect(request.getContextPath() + "/board?modifySuccess=failed");
-			return;
-		}
 		
 		Long no = Long.parseLong(request.getParameter("no"));
 		
 		BoardVo vo = new BoardDao().findByNo(no);
+		
+		if(authUser == null || !authUser.getNo().equals(vo.getUserNo())) {
+			response.sendRedirect(request.getContextPath() + "/board?modifySuccess=failed");
+			return;
+		}
+		
 		request.setAttribute("vo", vo);
 		request.setAttribute("no", no);
 		request.setAttribute("userNo", authUser.getNo());

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.poscodx.mysite.controller.ActionServlet.Action;
 import com.poscodx.mysite.dao.BoardDao;
 import com.poscodx.mysite.dao.GuestbookDao;
+import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
 
 public class DeleteAction implements Action {
@@ -26,13 +27,16 @@ public class DeleteAction implements Action {
 		
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
-		if(authUser == null) {
-			response.sendRedirect(request.getContextPath() + "/board?deleteSuccess=failed");
-			return;
-		}
+		
 		
 		String sno = request.getParameter("no");
 		Long no = Long.parseLong(sno);
+		BoardVo vo = new BoardDao().findByNo(no);
+		
+		if(authUser == null || !authUser.getNo().equals(vo.getUserNo())) {
+			response.sendRedirect(request.getContextPath() + "/board?deleteSuccess=failed");
+			return;
+		}
 		
 		String result = new BoardDao().deleteByNoAndUserNo(no, authUser.getNo());
 
