@@ -132,4 +132,18 @@ public class BoardController {
 		boardService.deleteContents(no, authUser.getNo());
 		return "redirect:/board";
 	}
+	
+	@RequestMapping("/search")
+	public String search(
+			Model model, 
+			@RequestParam(value="pageNum", required=true, defaultValue="") Integer pageNum,
+			@RequestParam(value="kwd", required=true, defaultValue="") String kwd
+	) {
+		Map<String, Object> map = boardService.getSearchContentsList(pageNum, kwd);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("pageVo", map.get("pageVo"));
+		model.addAttribute("kwd", map.get("kwd"));
+		model.addAttribute("pageNum", pageNum);
+		return "board/search_list";
+	}
 }

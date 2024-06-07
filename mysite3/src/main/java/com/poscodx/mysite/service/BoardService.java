@@ -68,4 +68,26 @@ public class BoardService {
 	public BoardVo findContentsByNo(Long no) {
 		return boardRepository.findByNo(no);
 	}
+
+	public Map<String, Object> getSearchContentsList(Integer pageNumber, String kwd) {
+		int pageNum = 1;
+		int amount = 5;
+				
+
+		if(pageNumber != null) {
+			pageNum = pageNumber;
+		}
+		
+		List<BoardVo> list = boardRepository.getSearch(kwd, pageNum, amount);
+		int total = boardRepository.getTotalSearchResults(kwd); 
+		PageVo pageVo = new PageVo(pageNum, amount, total);
+				
+		for (BoardVo vo : list) {
+		    vo.setContents(vo.getContents().replaceAll(">", "&gt;")
+		                                  .replaceAll("<", "&lt;")
+		                                  .replaceAll("\n", "<br/>"));
+		}
+		
+		return Map.of("pageVo", pageVo, "list", list, "kwd", kwd);
+	}
 }
