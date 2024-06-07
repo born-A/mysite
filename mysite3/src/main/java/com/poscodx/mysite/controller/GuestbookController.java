@@ -16,18 +16,19 @@ import com.poscodx.mysite.vo.GuestbookVo;
 @Controller
 @RequestMapping("/guestbook")
 public class GuestbookController {
+	
 	@Autowired
 	private GuestbookService guestbookService;
 	
 	@RequestMapping("")
-	public String list(Model model) {
+	public String index(Model model) {
 		List<GuestbookVo> list = guestbookService.getContentsList();
 		model.addAttribute("list", list);
-		return "guestbook/list";
+		return "guestbook/index";
 	}
 	
-	@RequestMapping(value="add", method=RequestMethod.POST)
-	public String add(GuestbookVo vo) {
+	@RequestMapping("/add")
+	public String index(GuestbookVo vo) {
 		guestbookService.addContents(vo);
 		return "redirect:/guestbook";
 	}
@@ -42,5 +43,5 @@ public class GuestbookController {
 	public String delete(@PathVariable("no") Long no, @RequestParam(value="password", required=true, defaultValue="") String password) {
 		guestbookService.deleteContents(no, password);
 		return "redirect:/guestbook";
-	}
+	}	
 }

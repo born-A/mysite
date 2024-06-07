@@ -33,8 +33,8 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board">글목록</a>
-					<a href="${pageContext.request.contextPath}/board?a=modifyform&no=${vo.getNo() }">글수정</a>
-					<a href="${pageContext.request.contextPath}/board?a=replyform&no=${vo.getNo() }&groupNo=${vo.getGroupNo() }&orderNo=${vo.getOrderNo() }&depth=${vo.getDepth() }">답글 달기</a>
+					<a href="${pageContext.request.contextPath}/board/modify/${vo.getNo() }">글수정</a>
+					<a href="${pageContext.request.contextPath}/board/reply?no=${vo.getNo() }&groupNo=${vo.getGroupNo() }&orderNo=${vo.getOrderNo() }&depth=${vo.getDepth() }">답글 달기</a>
 				</div>
 			</div>
 		</div>

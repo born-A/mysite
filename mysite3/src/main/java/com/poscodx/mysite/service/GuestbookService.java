@@ -10,17 +10,12 @@ import com.poscodx.mysite.vo.GuestbookVo;
 
 @Service
 public class GuestbookService {
+	
 	@Autowired
 	private GuestbookRepository guestbookRepository;
-
+	
 	public List<GuestbookVo> getContentsList() {
-		List<GuestbookVo> list = guestbookRepository.findAll();
-		for (GuestbookVo vo : list) {
-		    vo.setContents(vo.getContents().replaceAll(">", "&gt;")
-		                                  .replaceAll("<", "&lt;")
-		                                  .replaceAll("\n", "<br/>"));
-		}
-		return list;
+		return guestbookRepository.findAll();
 	}
 	
 	public void deleteContents(Long no, String password) {

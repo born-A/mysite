@@ -14,10 +14,10 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board?a=reply&userNo=${param.userNo }">
-   					<input type="hidden" name="groupNo" value="<%= request.getParameter("groupNo")%>"/>
-    				<input type="hidden" name="depth" value="<%= request.getParameter("depth")%>"/>
-    				<input type="hidden" name="orderNo" value="<%= request.getParameter("orderNo")%>"/>
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/reply?userNo=${map.get("userNo") }&groupNo=${map.get("groupNo") }&orderNo=${map.get("orderNo") }&depth=${map.get("depth") }">
+<%--    					<input type="hidden" name="groupNo" value="<%= request.getParameter("groupNo")%>"/>
+   					<input type="hidden" name="orderNo" value="<%= request.getParameter("orderNo")%>"/>
+    				<input type="hidden" name="depth" value="<%= request.getParameter("depth")%>"/> --%>
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>

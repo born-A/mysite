@@ -10,5 +10,7 @@
 </head>
 <body>
 	<h1>Exception Handler: Spring</h1>
+	<hr>
+	${error }
 </body>
 </html>
