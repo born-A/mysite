@@ -26,6 +26,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
+		<!-- spring aspect -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
 		<!-- mariadb jdbc -->
 		<dependency>
 		    <groupId>org.mariadb.jdbc</groupId>
