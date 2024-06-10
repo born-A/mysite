@@ -76,13 +76,14 @@ public class BoardController {
 			@RequestParam(value="orderNo", required=true, defaultValue="") int orderNo,
 			@RequestParam(value="depth", required=true, defaultValue="") int depth
 		) {
-		boardService.addReplyContents(vo, userNo, groupNo, groupNo, depth);
+		boardService.addReplyContents(vo, userNo, groupNo, orderNo, depth);
 		return "redirect:/board";
 	}
 	
 	@RequestMapping("/view/{no}")
 	public String view(@PathVariable("no") Long no, Model model) {
-		BoardVo vo = boardService.findContentsByNo(no);
+		BoardVo vo = boardService.getContents(no);
+		boardService.increaseHit(no);
 		model.addAttribute("vo", vo);
 		return "board/view";
 	}
@@ -95,7 +96,7 @@ public class BoardController {
 			return "redirect:/board";
 		}
 				
-		BoardVo vo = boardService.findContentsByNo(no);
+		BoardVo vo = boardService.getContents(no);
 		if(authUser == null || !authUser.getNo().equals(vo.getUserNo())) {
 			return "redirect:/board";
 		}
@@ -124,7 +125,7 @@ public class BoardController {
 			return "redirect:/board";
 		}
 		
-		BoardVo vo = boardService.findContentsByNo(no);
+		BoardVo vo = boardService.getContents(no);
 		if(authUser == null || !authUser.getNo().equals(vo.getUserNo())) {
 			return "redirect:/board";
 		}

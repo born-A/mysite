@@ -14,7 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath}/board?a=search" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath}/board/search" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
 				</form>
@@ -39,12 +39,12 @@
 									<c:if test="${vo.depth > 0}">    
 										<img src='${pageContext.request.contextPath }/assets/images/reply.png'>
 									</c:if>
-									<a href="${pageContext.request.contextPath}/board?a=view&no=${vo.getNo() }">${vo.getTitle() }</a>
+									<a href="${pageContext.request.contextPath}/board/view&no=${vo.getNo() }">${vo.getTitle() }</a>
 								</td>
 								<td>${vo.getUserName() }</td>
 								<td>${vo.getHit() }</td>
 								<td>${vo.getRegDate() }</td>
-								<td><a href="${pageContext.request.contextPath}/board?a=delete&no=${vo.getNo() }" class="del">삭제</a></td>
+								<td><a href="${pageContext.request.contextPath}/board/delete&no=${vo.getNo() }" class="del">삭제</a></td>
 							</tr>
 							</c:forEach>
 						</table>
@@ -53,22 +53,22 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>   		
-                    <c:if test="${param.pageNum != pageVo.getStartPage() }">
-                        <li><a href="${pageContext.request.contextPath}/board?a=search&kwd=${kwd }&pageNum=${param.pageNum - 1 }&amount=${pageVo.getAmount()}">◀</a></li>
+                    <c:if test="${pageNum != pageVo.getStartPage() }">
+                        <li><a href="${pageContext.request.contextPath}/board/search?kwd=${kwd }&pageNum=${pageNum - 1 }&amount=${pageVo.getAmount()}">◀</a></li>
                     </c:if>
 					<c:forEach var="num" begin="${pageVo.getStartPage() }" end="${pageVo.getEndPage() }">
 	                      <li  class="${pageVo.getPageNum() eq num ? 'selected' : '' }"> 
-	                      <a href="${pageContext.request.contextPath}/board?a=search&kwd=${kwd }&pageNum=${num }&amount=${pageVo.getAmount()}">${num }</a></li>
+	                      <a href="${pageContext.request.contextPath}/board/search?kwd=${kwd }&pageNum=${num }&amount=${pageVo.getAmount()}">${num }</a></li>
                  	</c:forEach>
-					<c:if test="${param.pageNum != pageVo.getEndPage() }">
-                        <li><a href="${pageContext.request.contextPath}/board?a=search&kwd=${kwd }&pageNum=${param.pageNum + 1 }&amount=${pageVo.getAmount()}">▶</a></li>
+					<c:if test="${pageNum != pageVo.getEndPage() }">
+                        <li><a href="${pageContext.request.contextPath}/board/search?kwd=${kwd }&pageNum=${pageNum + 1 }&amount=${pageVo.getAmount()}">▶</a></li>
                     </c:if>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath}/board?a=writeform" id="new-book">글쓰기</a>
+					<a href="${pageContext.request.contextPath}/board/write" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>

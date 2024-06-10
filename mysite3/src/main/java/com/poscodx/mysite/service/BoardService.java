@@ -17,20 +17,23 @@ public class BoardService {
 	
 	public void addContents(BoardVo vo) {
 		boardRepository.insert(vo);
+		boardRepository.updateGroupNo(vo.getNo().intValue());
 	}
 	
 	public void addReplyContents(BoardVo vo, Long userNo, int groupNo, int orderNo, int depth) {
 		boardRepository.updateOrderNo(groupNo, orderNo);
-		boardRepository.insertReplyBoard(vo, groupNo, orderNo, depth);
+		vo.setGroupNo(groupNo);
+		vo.setOrderNo(orderNo);
+		vo.setDepth(depth);
+
+		boardRepository.insertReplyBoard(vo);
+		boardRepository.updateGroupNo(groupNo);
 	}
 	
-	public BoardVo getContets(Long no) {
-		return boardRepository.findByNo(no);
+	public BoardVo getContents(Long no) {
+		BoardVo vo = boardRepository.findByNo(no);
+		return vo;
 	}
-	
-//	public BoardVo getContents(Long boardNo, Long userNo) {
-//		
-//	}
 	
 	public void updateContents(BoardVo vo, Long no, Long userNo) {
 		vo.setNo(no);
@@ -64,11 +67,7 @@ public class BoardService {
 		
 		return Map.of("pageVo", pageVo, "list", list);
 	}
-
-	public BoardVo findContentsByNo(Long no) {
-		return boardRepository.findByNo(no);
-	}
-
+	
 	public Map<String, Object> getSearchContentsList(Integer pageNumber, String kwd) {
 		int pageNum = 1;
 		int amount = 5;
@@ -90,4 +89,8 @@ public class BoardService {
 		
 		return Map.of("pageVo", pageVo, "list", list, "kwd", kwd);
 	}
-}
+	
+	public void increaseHit(Long no){
+		boardRepository.increaseHit(no);
+	}
+ }

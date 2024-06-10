@@ -27,6 +27,7 @@
 						<td>
 							<div class="view-content">
 								${vo.getContents() }
+								no=${vo.getNo() }
 							</div>
 						</td>
 					</tr>
