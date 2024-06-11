@@ -1,16 +1,10 @@
 package com.poscodx.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.poscodx.mysite.exception.UserRepositoryException;
 import com.poscodx.mysite.vo.UserVo;
 
 @Repository
