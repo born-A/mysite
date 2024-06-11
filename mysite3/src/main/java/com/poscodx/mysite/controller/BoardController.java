@@ -2,8 +2,6 @@ package com.poscodx.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
@@ -33,13 +33,9 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String add(HttpSession session, Model model) {
-		// Access Control
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/board";
-		}
+	public String add(@AuthUser UserVo authUser, Model model) {
 		model.addAttribute("userNo", authUser.getNo());
 		return "board/write";
 	}
@@ -50,20 +46,15 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	@Auth
 	@RequestMapping(value="/reply",method=RequestMethod.GET)
 	public String reply(
-			HttpSession session,
+			@AuthUser UserVo authUser,
 			@RequestParam(value="groupNo", required=true, defaultValue="") int groupNo, 
 			@RequestParam(value="orderNo", required=true, defaultValue="") int orderNo,
 			@RequestParam(value="depth", required=true, defaultValue="") int depth,
 			Model model
 		) {
-		// Access Control
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/board";
-		}
-		
 		model.addAttribute("map", Map.of("userNo",authUser.getNo(),"groupNo", groupNo, "orderNo", orderNo, "depth", depth));
 		return "board/reply_write"; 
 	}
@@ -88,14 +79,9 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	@Auth
 	@RequestMapping(value="/modify/{no}", method=RequestMethod.GET)
-	public String modify(HttpSession session, @PathVariable("no") Long no, Model model) {
-		// Access Control
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/board";
-		}
-				
+	public String modify(@AuthUser UserVo authUser, @PathVariable("no") Long no, Model model) {	
 		BoardVo vo = boardService.getContents(no);
 		if(authUser == null || !authUser.getNo().equals(vo.getUserNo())) {
 			return "redirect:/board";
@@ -117,19 +103,9 @@ public class BoardController {
 		return "redirect:/board/view/"+no;
 	}
 	
+	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete(HttpSession session, @PathVariable("no") Long no) {
-		// Access Control
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/board";
-		}
-		
-		BoardVo vo = boardService.getContents(no);
-		if(authUser == null || !authUser.getNo().equals(vo.getUserNo())) {
-			return "redirect:/board";
-		}
-		
+	public String delete(@AuthUser UserVo authUser, @PathVariable("no") Long no) {
 		boardService.deleteContents(no, authUser.getNo());
 		return "redirect:/board";
 	}
