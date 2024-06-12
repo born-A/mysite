@@ -13,11 +13,11 @@ public class SiteService {
 		this.siteRepository = siteRepository;
 	}
 	
-//	public SiteVo getSite() {
-//		//return siteRepository.find();
-//	}
+	public SiteVo getSite() {
+		return siteRepository.find();
+	}
 	
 	public void updateSite(SiteVo vo) {
-		//siteRepository.update(vo);
+		siteRepository.update(vo);
 	}
 }
