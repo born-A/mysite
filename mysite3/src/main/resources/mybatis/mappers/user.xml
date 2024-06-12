@@ -32,6 +32,14 @@
 		]]>
 	</select> <!-- 하나의 long 파라미터 이므로 임의의 이름을 넣으면 됨 -->
 	
+	<select id="findByEmail" parameterType="string" resultType="uservo">
+		<![CDATA[
+		select no, name, email, gender
+		  from user
+		 where email = #{email }
+		]]>
+	</select>
+	
 	<update id="update" parameterType="uservo">
 		<choose>
 			<when test='password == ""'>
