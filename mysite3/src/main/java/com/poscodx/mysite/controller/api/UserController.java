@@ -1,15 +1,13 @@
 package com.poscodx.mysite.controller.api;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import com.poscodx.mysite.dto.JsonResult;
 import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.UserVo;
 
@@ -21,8 +19,8 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping("/checkemail")
-	public Object checkEmail(@RequestParam(value="email", required=true, defaultValue="") String email) {
+	public JsonResult checkEmail(@RequestParam(value="email", required=true, defaultValue="") String email) {
 		UserVo vo = userService.getUser(email);
-		return Map.of("exist", vo != null);
+		return JsonResult.success(vo != null); 
 	}
 }

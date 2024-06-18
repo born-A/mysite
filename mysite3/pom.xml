@@ -78,6 +78,14 @@
 		<version>2.0.7</version>
 	</dependency>
 	
+	
+	<!-- validation -->		
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <version>6.2.3.Final</version>
+		</dependency>
+
 		<dependency>                                    
    			<groupId>org.slf4j</groupId>                
    			<artifactId>jcl-over-slf4j</artifactId>     
@@ -104,6 +112,19 @@
     	<version>2.13.4.1</version>
 	</dependency>
 
+				
+		<!-- logback(slf4j) -->
+		<dependency>                                    
+   			<groupId>org.slf4j</groupId>                
+   			<artifactId>jcl-over-slf4j</artifactId>     
+   			<version>${jcloverslf4j.version}</version>  
+		</dependency>
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>${logback.version}</version>
+		</dependency>
+				
 				
 		<!-- servlet -->
 		<dependency>
