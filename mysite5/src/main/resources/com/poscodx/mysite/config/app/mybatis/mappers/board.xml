@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<select id="getList" resultType="boardvo">
+		<![CDATA[
+		SELECT b.no, b.title, b.contents, b.hit, date_format(b.reg_date, '%Y/%m/%d') AS regDate, b.depth, u.name 
+	                FROM board b
+	                JOIN user u ON b.user_no = u.no 
+	                ORDER BY b.g_no DESC, b.o_no ASC, b.reg_date DESC
+	                LIMIT #{amount } OFFSET #{newAmount }
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[
+		insert into board values(null, #{title }, #{contents }, 0, now(), 0, 1, 0, #{userNo })
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER"> <!-- key를 가져올수 있는 쿼리만. 두개의 쿼리는 넣을 수 없다. -->
+			<![CDATA[
+			select last_insert_id() from dual 
+			]]>
+		</selectKey>
+	</insert>
+	
+	<insert id="insertReplyBoard" parameterType="boardvo">
+		<![CDATA[
+		insert into board values(null,  #{title }, #{contents }, 0, current_date(), #{groupNo }, #{orderNo }, #{depth },  #{userNo })
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER"> <!-- key를 가져올수 있는 쿼리만. 두개의 쿼리는 넣을 수 없다. -->
+			<![CDATA[
+			select last_insert_id() from dual 
+			]]>
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByNoAndPassword" parameterType="map">
+		<![CDATA[
+		delete 
+			from guestbook 
+			where no = #{no }
+				and password = #{password }
+		]]>
+	</delete>
+	
+	<update id="modify" parameterType="boardVo">
+		<![CDATA[
+			update board set title= #{title }, contents=#{contents } where no=#{no } and user_no=#{userNo }
+		]]>
+	</update>
+	
+	<resultMap id="boardResultMap" type="BoardVo">
+    	<result property="no" column="no"/>
+    	<result property="title" column="title"/>
+    	<result property="contents" column="contents"/>
+    	<result property="groupNo" column="g_no"/>
+    	<result property="orderNo" column="o_no"/>
+    	<result property="depth" column="depth"/>
+    	<result property="userNo" column="user_no"/>
+	</resultMap>
+
+	<select id="findByNo" resultMap="boardResultMap" parameterType="long">
+    	<![CDATA[
+    	select no, title, contents, g_no, o_no, depth, user_no from board where no = #{no}
+    	]]>
+	</select>
+
+	<select id="getSearch" resultType="boardvo">
+    	<![CDATA[
+    	SELECT b.no, b.title, b.contents,b.hit,DATE_FORMAT(b.reg_date, '%Y/%m/%d') AS reg_date,
+				b.depth, u.name FROM board b JOIN
+				user u ON b.user_no = u.no
+				where b.title LIKE #{kwd } ORDER BY 
+				b.g_no DESC, b.o_no ASC,
+				b.reg_date DESC
+                LIMIT #{limit } OFFSET #{offset }
+    	]]>
+	</select>
+
+	<select id="getTotal" resultType="java.lang.Integer">
+		<![CDATA[
+		select count(*) from board
+		]]>
+	</select>
+	
+	<select id="getTotalSearchResults" parameterType="java.lang.String" resultType="java.lang.Integer">
+		<![CDATA[
+		SELECT COUNT(*)
+			FROM board
+	        	WHERE title LIKE #{searchPattern }
+		]]>
+	</select>
+	
+	<update id="increaseHit" parameterType="long">
+		<![CDATA[
+			update board set hit = hit + 1 where no = #{no }
+		]]>
+	</update>
+	
+	<update id="updateOrderNo" parameterType="map">
+		<![CDATA[
+			update board set o_no = o_no + 1 where g_no = #{groupNo } and o_no > #{orderNo }
+		]]>
+	</update>
+	
+	<update id="updateGroupNo" parameterType="java.lang.Integer">
+		<![CDATA[
+			update board set g_no = #{no } where no = #{no }
+		]]>
+	</update>
+	
+	<delete id="deleteByNoAndUserNo" parameterType="map">
+		<![CDATA[
+		delete from board where no = #{no } and user_no = #{userNo }
+		]]>
+	</delete>
+</mapper>
