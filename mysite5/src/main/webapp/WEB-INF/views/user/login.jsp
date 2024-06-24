@@ -19,7 +19,7 @@
 					<input id="email" name="email" type="text" value="${email }">
 					<label class="block-label" >패스워드</label>
 					<input name="password" type="password" value="">
-					<c:if test='${result == "fail" }'>
+					<c:if test='${not empty email}'>
 					<p>
 						로그인이 실패 했습니다.
 					</p>

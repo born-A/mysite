@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,8 +35,14 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board">글목록</a>
-					<a href="${pageContext.request.contextPath}/board/modify/${vo.getNo() }">글수정</a>
-					<a href="${pageContext.request.contextPath}/board/reply?no=${vo.getNo() }&groupNo=${vo.getGroupNo() }&orderNo=${vo.getOrderNo() }&depth=${vo.getDepth() }">답글 달기</a>
+					
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal" var="authUser"/>
+						<a href="${pageContext.request.contextPath}/board/reply?no=${vo.getNo() }&groupNo=${vo.getGroupNo() }&orderNo=${vo.getOrderNo() }&depth=${vo.getDepth() }">답글달기</a>
+						<c:if test="${authUser.no == vo.userNo }">
+							<a href="${pageContext.request.contextPath}/board/modify/${vo.getNo() }">글수정</a>
+						</c:if>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

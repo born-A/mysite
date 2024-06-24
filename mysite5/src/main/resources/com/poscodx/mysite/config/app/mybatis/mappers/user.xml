@@ -6,7 +6,7 @@
 		<![CDATA[
 		insert 
 			into user 
-			values(null, #{name }, #{email }, password(#{password }), #{gender }, current_date(), 'USER')
+			values (null, #{name }, #{email }, #{password }, #{gender }, current_date(), 'USER')
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER"> <!-- key를 가져올수 있는 쿼리만. 두개의 쿼리는 넣을 수 없다. -->
 			<![CDATA[
@@ -32,9 +32,9 @@
 		]]>
 	</select> <!-- 하나의 long 파라미터 이므로 임의의 이름을 넣으면 됨 -->
 	
-	<select id="findByEmail" parameterType="string" resultType="uservo">
+	<select id="findByEmail" parameterType="string" resultType="map">
 		<![CDATA[
-		select no, name, email, gender
+		select no, name, email, password, role
 		  from user
 		 where email = #{email }
 		]]>
@@ -54,7 +54,7 @@
 				<![CDATA[
 				update user 
 					set name=#{name }, 
-						password=password(#{password }), 
+						password=#{password },
 						gender=#{gender }
 					where no=#{no }
 				]]>
