@@ -1,4 +1,4 @@
-package com.poscodx.mysite.config.app;
+package com.poscodx.mysite.config;
 
 import java.io.IOException;
 
@@ -6,8 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,7 +26,7 @@ import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 import com.poscodx.mysite.security.UserDetailsServiceImpl;
 
-@Configuration
+@SpringBootConfiguration
 @EnableWebSecurity
 public class SecurityConfig {
 	@Bean

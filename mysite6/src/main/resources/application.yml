@@ -1,0 +1,71 @@
+# spring configuration
+spring:
+   application:
+      name: mysite
+ 
+   # devtools - live reload
+   devtools:
+      livereload:
+         enabled: true
+
+   # aop
+   aop:
+      auto: true
+      proxy-target-class: true
+
+   # mvc            
+   mvc:
+      static-path-pattern: /assets/**
+      throw-exception-if-no-handler-found: true
+      # view:
+      #   prefix: /WEB-INF/views/
+      #   suffix: .jsp
+
+   # web
+   web:
+      resources:
+         static-locations: file:/Users/bona/fileupload-files/, classpath:assets/
+   
+   # message resources(i18n)
+   messages:
+      basename: messages/message
+      encoding: utf-8
+      always-use-message-format: true
+      
+   # multipart
+   servlet:
+      multipart:
+         enabled: true
+         max-file-size: 50MB
+         max-request-size: 10MB
+         
+   # datasource
+   datasource:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mariadb://192.168.64.4:3306/webdb?charset=utf8
+      username: webdb
+      password: webdb
+      hikari:
+         minimum-idle: 10
+         maximum-pool-size: 20  
+
+# mybatis
+mybatis:
+   config-location: classpath:mybatis/configuration.xml
+   
+# server configuration
+server:
+   port: 8088
+   servlet:
+      context-path: /mysite6
+      encoding:
+         charset: utf-8
+         enabled: true
+   error:
+      whitelabel:
+         enabled: false
+      path: /error
+
+# logging
+logging:
+  config: classpath:logback.xml         
